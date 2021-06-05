@@ -2,6 +2,8 @@
 
 ## Setting up local domain
 
+> skip this part if gonna test directly on remote droplets
+
 http://api.garmoth.local:3050 or localhost:3050
 
 you can change port in `docker-compose.yaml` find the nginx service
@@ -65,3 +67,23 @@ Loading composer repositories with package information
 Installing dependencies (including require-dev) from lock file
 ......
 ```
+
+Here the application should be running and ready, try to access it by using the url either local or remote
+
+The path `/wait` which is under the prometheus middleware does put the page to sleep for some milliseconds for testing purposes.
+
+Accessing this endpoint multiple times will generate enough data for prometheus to pickup and grafana display meaningful results, if you create and execute a script to access this page 2-5 times per second you will see more *better* relevant data
+
+## Moving to production
+
+Requirements 
+
+- PHP's [Redis Extension](https://github.com/phpredis/phpredis) | installed with pecl is ez
+- composer package: [promphp/prometheus_client_php](https://github.com/promphp/prometheus_client_php)
+- Redis server running alongside the laravel app (low memory usage tbf)
+
+Files that you want to copy/paste and perhaps modify:
+
+- app/Providers/PrometheusServiceProvider.php add entry to config/app.php
+- app/Http/Middleware/PrometheusMiddleware.php - add entry to app/Http/Kernel.php
+- app/Http/Controllers/PrometheusController.php

@@ -33,8 +33,8 @@ services:
     secrets:
       - source: local
         target: /etc/prometheus/garmoth_local
-      - source: prod
-        target: /etc/prometheus/garmoth_prod
+#      - source: prod
+#        target: /etc/prometheus/garmoth_prod
       - source: conf
         target: /etc/prometheus/prometheus.yaml
 
@@ -49,8 +49,8 @@ secrets:
     file: ./prometheus.yaml
   local:
     file: ./garmoth_local
-  prod:
-    file: ./garmoth_prod
+#  prod:
+#    file: ./garmoth_prod
 
   graf_datasource:
     file: ./graf_ds.yaml
