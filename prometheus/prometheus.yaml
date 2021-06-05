@@ -1,0 +1,24 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+#  - job_name: garmoth-prod
+#    scheme: https
+#    metrics_path: /promoth
+#    authorization:
+#      type: Bearer
+#      credentials_file: /etc/prometheus/garmoth_prod
+#    static_configs:
+#      - targets:
+#          - "garmoth.com"
+
+  - job_name: garmoth-local
+    scheme: http
+    metrics_path: /promoth
+    authorization:
+      type: Bearer
+      credentials_file: /etc/prometheus/garmoth_local
+    static_configs:
+      - targets:
+          - "app_nginx"

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {return view('welcome');});
 
-Route::get('/metrics', [\App\Http\Controllers\PrometheusController::class, 'exposeMetrics']);
+Route::get('/promoth', [\App\Http\Controllers\PrometheusController::class, 'exposeMetrics']);
 
 Route::group(
     ['middleware' => 'prometheus'],

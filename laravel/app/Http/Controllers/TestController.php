@@ -11,8 +11,8 @@ class TestController extends Controller
 {
     public function randomWait(Request $request, Response $response)
     {
-        // sleep between 10ms to 2000ms
-        $time = rand(10, 2000);
+        // sleep between 10ms to 1500ms
+        $time = rand(10, 1500);
 
         usleep($time * 1000);
 

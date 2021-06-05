@@ -21,7 +21,17 @@ class PrometheusController extends Controller
 
     public function exposeMetrics(Request $request, Response $response)
     {
-        // TODO: add basic auth or token
+        $token  = $_ENV['PROMETHEUS_TOKEN'];
+        $bearer = $request->bearerToken();
+
+        if (
+            !$token ||
+            !$bearer ||
+            $token !== $bearer
+        ) {
+            return $response
+                ->setStatusCode(401);
+        }
 
         $response->setContent(
             (new RenderTextFormat())->render(

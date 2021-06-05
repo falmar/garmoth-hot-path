@@ -1,0 +1,60 @@
+version: '3.7'
+
+services:
+  grafana:
+    image: grafana/grafana:7.5.7
+    ports:
+      - 3053:3000
+    networks:
+      - net
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    secrets:
+      - source: graf_datasource
+        target: /etc/grafana/provisioning/datasources/datasources.yml
+      - source: graf_provider
+        target: /etc/grafana/provisioning/dashboards/prom.yml
+      - source: graf_dash
+        target: /etc/grafana/dashboards/graf_dash.json
+
+  prom:
+    image: prom/prometheus:v2.27.1
+    ports:
+      - 3059:9090
+    networks:
+      - net
+      - promoth
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yaml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention=24h'
+    secrets:
+      - source: local
+        target: /etc/prometheus/garmoth_local
+      - source: prod
+        target: /etc/prometheus/garmoth_prod
+      - source: conf
+        target: /etc/prometheus/prometheus.yaml
+
+networks:
+  net: { }
+  promoth:
+    external: true
+    name: promoth
+
+secrets:
+  conf:
+    file: ./prometheus.yaml
+  local:
+    file: ./garmoth_local
+  prod:
+    file: ./garmoth_prod
+
+  graf_datasource:
+    file: ./graf_ds.yaml
+  graf_provider:
+    file: ./graf_providers.yaml
+  graf_dash:
+    file: ./graf_dash.json
