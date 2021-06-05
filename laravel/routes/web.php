@@ -13,6 +13,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', function () {return view('welcome');});
+
+Route::get('/metrics', [\App\Http\Controllers\PrometheusController::class, 'exposeMetrics']);
+
+Route::group(
+    ['middleware' => 'prometheus'],
+    function () {
+        Route::get(
+            '/wait',
+            [
+                \App\Http\Controllers\TestController::class,
+                'randomWait'
+            ]
+        );
+    }
+);
