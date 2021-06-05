@@ -4,5 +4,5 @@
 
 
 - [digital-ocean](/digital-ocean/README.md) for droplet setup
-- [laravel](/laravel/docker/README.md) for testing laravel app
+- [laravel](/laravel/README.md) for testing laravel app
 - [prometheus](/prometheus/README.md) for prom+grafana setup
